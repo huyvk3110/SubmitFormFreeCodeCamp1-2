@@ -1,0 +1,81 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    --font-white: #f3f3f3;
+    --font-grey: #495057;
+}
+
+body {
+    background: linear-gradient(115deg, rgba(58, 58, 158, 0.8), rgba(136, 136, 206, 0.7)), url('https://raw.githubusercontent.com/lasjorg/fcc-form-example-image/master/67103817-7c51e200-f18b-11e9-975f-f74561336a9a-lj.jpg');
+}
+
+header {
+    text-align: center;
+    color: var(--font-white);
+    margin: 20px;
+}
+
+#survey-form {
+    background-color: rgba(0, 0, 0, 0.5);
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 50px;
+    border-radius: 5px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.form-group .form-title {
+    font-size: larger;
+    margin-bottom: 10px;
+}
+
+.form-group label, p {
+    display: block;
+    line-height: 1.75rem;
+    color: var(--font-white);
+}
+
+.form-group input, select {
+    color: var(--font-grey);
+}
+
+.form-group input[type="radio"], input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.form-group input[type="text"], select, textarea, input[type="button"] {
+    width: 100%;
+    height: 2.375rem;
+    padding: 0.375rem 0.75rem;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin: 0;
+    font-size: medium;
+}
+
+.form-group textarea {
+    height: 5rem;
+}
+
+input[type="button"] {
+    background-color: #37af65;
+    color: var(--font-white);
+    border: none;
+}
+
+#bubble {
+    display: none;
+    position: fixed;
+    background: white;
+    padding: 8px;
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 0.6px;
+    left: 19%;
+}

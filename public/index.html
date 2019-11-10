@@ -1,12 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FCC: Survey Form</title>
+    <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
-    
+    <div class="container">
+        <header>
+            <h1 id="title">Career Survey</h1>
+            <p id="description">Please fill in all required fields, we will find you suitable jobs</p>
+        </header>
+        <form id="survey-form">
+            <div class="form-group">
+                <label class="form-title" for="name" id="name-label">Name</label>
+                <input type="text" name="name" id="name" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label class="form-title" for="email" id="email-label">Email</label>
+                <input type="text" name="email" id="email" placeholder="Enter your Email">
+            </div>
+            <div class="form-group">
+                <label class="form-title" for="age" id="number-label">Age (optional)</label>
+                <input type="text" name="age" id="number" placeholder="Enter your age">
+            </div>
+            <div class="form-group">
+                <label class="form-title" for="country" id="dropdown-label">Your country</label>
+                <select name="country" id="dropdown">
+                    <option disabled selected value>Select country</option>
+                    <option value="vn">Viet Nam</option>
+                    <option value="th">Thai Land</option>
+                    <option value="us">United States</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <p class="form-title">Choose the career you want</p>
+                <label><input type="radio" name="career-choose" value="developer">Developer</label>
+                <label><input type="radio" name="career-choose" value="maketing">Maketing</label>
+                <label><input type="radio" name="career-choose" value="chef">Chef</label>
+                <label><input type="radio" name="career-choose" value="shipper">Shipper</label>
+                <label><input type="radio" name="career-choose" value="plumper">Plumper</label>
+                <label><input type="radio" name="career-choose" value="staff">Staff</label>
+                <label><input type="radio" name="career-choose" value="other">Other</label>
+            </div>
+            <div class="form-group">
+                <p class="form-title">Choose the things you care about your work</p>
+                <label><input type="checkbox" name="work-thing" value="salary">Salary</label>
+                <label><input type="checkbox" name="work-thing" value="location">Location</label>
+                <label><input type="checkbox" name="work-thing" value="position">Position</label>
+                <label><input type="checkbox" name="work-thing" value="worktime">Worktime</label>
+                <label><input type="checkbox" name="work-thing" value="colleague">Colleague</label>
+                <label><input type="checkbox" name="work-thing" value="company culture">Company culture</label>
+                <label><input type="checkbox" name="work-thing" value="other">Other</label>
+            </div>
+            <div id="comment" class="form-group">
+                <p class="form-title">Any comments or suggestions</p>
+                <textarea name="comment" id="text-comment" cols="30" rows="5"
+                    placeholder="Enter comment here..."></textarea>
+            </div>
+            <input id="submit" type="button" value="Submit">
+        </form>
+        <div id="bubble">
+            This is bubble
+        </div>
+    </div>
 </body>
+<script>
+    //Get element
+    let elementForm = document.getElementById('survey-form')
+    let elementName = document.getElementById('name');
+    let elementEmail = document.getElementById('email');
+    let elementNumber = document.getElementById('number');
+    let elementDropdown = document.getElementById('dropdown');
+    let elementSubmit = document.getElementById('submit');
+    let elementBubble = document.getElementById('bubble');
+
+    //Event
+    window.addEventListener('scroll', () => {
+        if (isBubbleShow()) hiddenBubble()
+    })
+
+    window.addEventListener('keydown', () => {
+        if (isBubbleShow()) hiddenBubble()
+    })
+
+    elementForm.addEventListener('keydown', (keyEvent) => {
+        if (keyEvent.keyCode == 13) submit()
+    })
+
+    elementNumber.addEventListener('input', (event) => {
+        if (isNaN(parseInt(event.data))) elementNumber.value = elementNumber.value.slice(0, elementNumber.value.length - 1);
+    })
+
+    elementSubmit.addEventListener('click', submit)
+
+    //Support
+    function showBubble(element, message) {
+        elementBubble.style.display = `inline-block`
+        elementBubble.style.top = `${element.getBoundingClientRect().top + element.offsetHeight}px`
+        elementBubble.innerText = message;
+    }
+
+    function hiddenBubble() {
+        elementBubble.style.display = 'none'
+    }
+
+    function isBubbleShow() {
+        return elementBubble.style.display != 'none';
+    }
+
+    function submit() {
+        //Variable
+        let error = undefined;
+        //Check
+        //-Name
+        if (!elementName.value) error = {
+            href: '#name-label',
+            element: elementName,
+            message: 'Please fill out this field',
+        }
+        //-Email
+        const emailValue = elementEmail.value;
+        let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if (!error && !emailValue) error = {
+            href: '#email-label',
+            element: elementEmail,
+            message: 'Please fill out this field'
+        }
+        if (!error && !regex.test(String(emailValue).toLowerCase())) error = {
+            href: '#email-label',
+            element: elementEmail,
+            message: 'Incorect email format'
+        }
+        //-Number
+        let age = parseInt(elementNumber.value);
+        if (!error && (isNaN(age) || age > 100 || age < 10)) error = {
+            href: '#number-label',
+            element: elementNumber,
+            message: 'Age must be number greater than 10 and lower than 100'
+        }
+        //-Country
+        let country = elementDropdown.value;
+        if (!error && !country) error = {
+            href: '#dropdown-label',
+            element: elementDropdown,
+            message: 'Please select country'
+        }
+
+        if (error) {
+            location.href = error.href;
+            setTimeout(() => { showBubble(error.element, error.message) }, 200);
+        }
+    }
+</script>
+
 </html>
