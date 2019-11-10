@@ -102,6 +102,7 @@
     function showBubble(element, message) {
         elementBubble.style.display = `inline-block`
         elementBubble.style.top = `${element.getBoundingClientRect().top + element.offsetHeight}px`
+        elementBubble.style.left = `${element.getBoundingClientRect().left}px`
         elementBubble.innerText = message;
     }
 
